@@ -1,5 +1,5 @@
-<h2 align=center>October 13th, 2022</h2>
-<p align=center><sup><em>(updated on August 2nd, 2023)</em></sup></p>
+<h2 align=center>21 Vendémiaire Year CCXXXI</h2>
+<p align=center><sup><em>(updated on June 20th, 2026)</em></sup></p>
 
 <h1 align=center><em>Nintendo Entertainment System:</em> Game Programming in Assembly</h1>
 
@@ -57,7 +57,7 @@ Being rather old and with spotty online documentation, previous knowledge of the
 
 #### **Speaker**
 
-**Professor Sebastián Romero Cruz** _(b. Mexico City, México)_ is a adjunct computer science instructor at both NYU Tandon School of Engineering and Pace University's Seidenberg School Of Computer Science and Information Systems. 
+**Professor Sebastián Romero Cruz** _(b. Mexico City, México)_ is an Industry Assistant Professor in the Department of Computer Science and Engineering at NYU Tandon School of Engineering.
 
 Having received their undergraduate degree in chemical and biomolecular engineering and their graduate degree in computer science, they encourage a multi-faceted, inclusive approach to programming pedagogy. This policy, combined with a philosophy of complete and unconditional empathy for students of varying backgrounds and needs, are the means through which their courses are administered.
 
@@ -195,7 +195,7 @@ This is essentially all we need to know to get started with some simple developm
 
 I have included an incomplete version of one of my personal projects for us to work in.
 
-If we assemble (`make` in the command line) and run [**cassette.asm**](cassette.asm) (`make run` in the command line`), we should see the following screen:
+If we assemble (`make` in the command line) and run [**cassette.asm**](cassette.asm) (`make run` in the command line), we should see the following screen:
 
 ```commandline
 ➜  game-programming-in-assembly git:(main) ✗ make    
@@ -299,7 +299,7 @@ Let's apply the label `STRNG_STRT` to this location for convenience. Visually, y
 ... ––– E4 ––– E3 ––– E2 ––– E1
 ```
 
-<sub>**Figure 15**: A visualisation of how each of the four bytes dedicated to each letter are stored in memory–contiguously (that is, stored right next to each other in memory). `1` corresponds to the vertical position byte, `2` corresponds to the the tile byte, `3` the attributes byte, and `4` the horizontal position byte.</sub>
+<sub>**Figure 15**: A visualisation of how each of the four bytes dedicated to each letter are stored in memory–contiguously (that is, stored right next to each other in memory). `1` corresponds to the vertical position byte, `2` corresponds to the tile byte, `3` the attributes byte, and `4` the horizontal position byte.</sub>
 
 6502 assembly has this gnarly way of addressing data that is contiguous called **absolute indexed** addressing. This effectively means that we can offset which location we are accessing by a certain index. For example, if we wanted to load the value stored 3 bytes away from location `$0100`, we would do the following:
 
@@ -309,7 +309,7 @@ Let's apply the label `STRNG_STRT` to this location for convenience. Visually, y
 
 This is perfect for our needs, since we know our starting point, `STRNG_STRT`. 
 
-We can also figure out the amount of times this loop will run with some simple math. If there are 8 letters in the word "cassette", and each letter comprises for 4 bytes, then the "size" of this tile string is 8 × 4 = (32)<sub>10</sub> = (20)<sub>16</sub>.
+We can also figure out the amount of times this loop will run with some simple math. If there are 8 letters in the word "cassette", and each letter comprises 4 bytes, then the "size" of this tile string is 8 × 4 = (32)<sub>10</sub> = (20)<sub>16</sub>.
 
 Let's call this value `STRNG_SIZE`:
 
@@ -390,7 +390,7 @@ But the whole point of video games is having the _player_ make things happen wit
     6. Check if the left button is pressed.
     7. Check if the right button is pressed.
 
-That's basically it as far as check for button presses is concerned. The function skeleton in our assembly file, then...
+That's basically it as far as checking for button presses is concerned. The function skeleton in our assembly file, then...
 
 ```asm
 ReadControllerInput:
@@ -450,7 +450,7 @@ result     --> XXXXXXX0 (not pressed)  | --> XXXXXXX1 (pressed)
 
 <sub>**Figure 17**: The two potential results of a bitwise `and` operation on `CNTRLRONE` and (1)<sub>2</sub>, where `X` represents in this case an irrelevant bit.</sub>
 
-Let's handle moving to the right if the player presses the right button, since we're already aquatinted with the basics of this operation:
+Let's handle moving to the right if the player presses the right button, since we're already acquainted with the basics of this operation:
 
 ```asm
 ReadControllerInput:
@@ -476,7 +476,7 @@ ReadRight:
 EndReadRight:
 ```
 
-Think of `EndReadRight` as the label we'll just straight to if the button wasn't pressed.
+Think of `EndReadRight` as the label we'll jump straight to if the button wasn't pressed.
 
 To perform an `and` operation, we do the following:
 
@@ -492,7 +492,7 @@ ReadRight:
 EndReadRight:
 ```
 
-<sub>**Code Block 9**: This of this as an `if`-statement checking for a button press that would `return` right away if there wasn't an actual press detected.</sub>
+<sub>**Code Block 9**: Think of this as an `if`-statement checking for a button press that would `return` right away if there wasn't an actual press detected.</sub>
 
 Nice. Now, we perform the same steps to move all of the cassette tiles involved in making our sprite to the right as we did with the banner:
 
@@ -616,7 +616,7 @@ ReadLeft:
 EndReadLeft:
 ```
 
-<sub>**Code Block 11**: Translating upwards, downwards, and to the left _only if_ the their corresponding buttons are pressed. Notice that, in the case of subtraction, we have to _set_ the carry flag instead of clearing it.</sub>
+<sub>**Code Block 11**: Translating upwards, downwards, and to the left _only if_ their corresponding buttons are pressed. Notice that, in the case of subtraction, we have to _set_ the carry flag instead of clearing it.</sub>
 
 #### Changing Colour Palettes
 
@@ -657,7 +657,7 @@ Remember the third byte from earlier? I previously called it the "attribute" byt
 
 The two most significant (rightmost) bits correspond to the palette currently being used to colour the tile. The 6502 allows for up to four palettes to be assigned to a particular sprite (i.e. (0)<sub>2</sub> for palette 1, (1)<sub>2</sub> for palette 2, (2)<sub>2</sub> for palette 3, and (3)<sub>2</sub> for palette 4). So, in code block 12, we can see that all tiles are currently using colour palette 1 (`01`, or (1)<sub>2</sub>)).
 
-How about we try to do this: every time the player clicks on the A-button, the palette being applied to the tiles will rotate between the four available palettes. We can even think of this is as a game mechanic; maybe every palette represents a different power-up our cassette protagonist can use. 
+How about we try to do this: every time the player clicks on the A-button, the palette being applied to the tiles will rotate between the four available palettes. We can even think of this as a game mechanic; maybe every palette represents a different power-up our cassette protagonist can use. 
 
 Fundamentally speaking, the steps of this process are the same as how we achieved movement: we load up the appropriate byte (`CSSETTE_ATR`, or `$0302`), perform the appropriate steps to change the palette, skip four bytes to reach the next sprite's attribute byte, and repeat the process for each of the sprites that comprise the cassette:
 
@@ -759,7 +759,7 @@ The steps are now to:
     ; The rest of the A button instructions...
 ```
 
-<sub>**Code Block 16**: Cycling through 0, 1, 2, and 3. Here `PALETTE_LIM` has a value of `0`.</sub>
+<sub>**Code Block 16**: Cycling through 0, 1, 2, and 3. Here `PALETTE_LIM` has a value of `4`.</sub>
 
 Cool, so that's step 1. 
 
@@ -769,7 +769,7 @@ Now we need to actually apply the current value of `paletteCycleCounter` to the 
 
 This part is super fun. Checking for a button press was relatively easy, right? We only had to perform an `and` operation against a specific byte. Changing two specific bits, while leaving the other six completely untouched, requires a bit of a finer touch. Nothing we can't handle though.
 
-Our goal is the following: since `paletteCycleCounter` is keeping the value of `00`, `01`, `10`, or `11`, _if we were able to get **bits 0 and 1 to both be zeros**, an exclusive-or (`xor`) operation with the value of `paletteCycleCounter` would get them into the appropriate values_. So our goal is to, regardless of their current value, get bits 1 and 2 to both be zero:
+Our goal is the following: since `paletteCycleCounter` is keeping the value of `00`, `01`, `10`, or `11`, _if we were able to get **bits 0 and 1 to both be zeros**, an exclusive-or (`xor`) operation with the value of `paletteCycleCounter` would get them into the appropriate values_. So our goal is to, regardless of their current value, get bits 0 and 1 to both be zero:
 
 ```
 CSSETTE_ATR ----------> XXXXXX00 | --> XXXXXX01 | --> XXXXXX10 | --> XXXXXX11
